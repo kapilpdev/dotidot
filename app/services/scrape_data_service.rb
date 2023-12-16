@@ -8,10 +8,13 @@ class ScrapeDataService
   end
 
   def call
-    html = HTTParty.get(@url).body
-    doc = Nokogiri::HTML(html)
-    result = fetch_data(doc)
-    Scraper.create_from_hash(@url, result)
+    data = @fields.include?('meta') ? 'meta' : 'data'
+    Rails.cache.fetch("#{@url}/#{data}", expires_in: 1.hour) do
+      html = HTTParty.get(@url).body
+      doc = Nokogiri::HTML(html)
+      result = fetch_data(doc)
+      Scraper.create_from_hash(@url, result)
+    end
   rescue StandardError => e
     { error: e.message }
   end
