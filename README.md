@@ -6,6 +6,9 @@
 * Rails version
   - 7.0.8
 
+* Run bundle
+  - bundle install
+
 * Database creation
   - rails db:create
   - rails db:migrate
