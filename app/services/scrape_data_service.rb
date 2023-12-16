@@ -1,4 +1,3 @@
-require 'open-uri'
 require 'nokogiri'
 
 class ScrapeDataService
@@ -15,8 +14,6 @@ class ScrapeDataService
       result = fetch_data(doc)
       Scraper.create_from_hash(@url, result)
     end
-  rescue StandardError => e
-    { error: e.message }
   end
 
   private
